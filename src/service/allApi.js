@@ -11,3 +11,8 @@ export const requestApi= async(reqBody)=>{
 export const loginApi=async(reqBody)=>{
     return await commonApi('POST',`${serverUrl}/login`,reqBody,'')
 }
+
+//add project
+export const addProjectApi=async()=>{
+ return await commonApi('POST',`${serverUrl}/add-project`,reqBody,reqHeader)
+}
