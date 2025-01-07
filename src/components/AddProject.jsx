@@ -44,6 +44,7 @@ function AddProject() {
             projectImage: ""
         })
         setPreview("")
+        //key attribute - when a value of key attribute changes on onchange events calls/invokes
         if (key == 1) {
             setkey(0)
         } else {
@@ -78,10 +79,24 @@ function AddProject() {
             if (token) {
                 const reqHeader = {
                     "Content-Type": "multipart/form-data",
-                    "Authorization": `Bearer${token}`
+                    "Authorization": `Bearer ${token}`
                 }
                 const result = await addProjectApi(reqBody, reqHeader)
                 console.log(result);
+
+                if (result.status == 200) {
+                    toast.success(`project added successfully`)
+                    setTimeout(() => {
+                        handleClose()
+                    }, 2000)
+                } else if (result.status == 406) {
+                    toast.warning(result.response.data)
+                    handleCancel()
+                } else {
+                    toast.error(`Something went wrong`)
+                    handleClose()
+                }
+
             } else {
                 toast.warning('Please login')
             }
@@ -110,7 +125,7 @@ function AddProject() {
                         <div className="row d-flex align-items-center">
                             <div className="col-md-6">
                                 <label htmlFor="projectImage">
-                                    <input type="file" key={key} className='d-none' name="" id="projectImage" onChange={(e) => handleFile(e)} />
+                                    <input type="file" key={key} className='d-none' id="projectImage" onChange={(e) => handleFile(e)} />
                                     <img src={preview ? preview : "https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/hfpqyV7B-IMG-Dubai-UAE.jpg"} className='w-100' alt="No image" />
                                 </label>
                             </div>
