@@ -129,7 +129,7 @@ function AddProject() {
                                     <img src={preview ? preview : "https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/hfpqyV7B-IMG-Dubai-UAE.jpg"} className='w-100' alt="No image" />
                                 </label>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-6 mt-md-0 mt-1">
                                 <input type="text" value={projectDetails.title} placeholder='Title' className='form-control mt-2 mt-md-0' onChange={(e) => setProjectDetails({ ...projectDetails, title: e.target.value })} />
                                 <input type="text" value={projectDetails.language} placeholder='Language' className='form-control mt-2' onChange={(e) => setProjectDetails({ ...projectDetails, language: e.target.value })} />
                                 <input type="text" value={projectDetails.github} placeholder='Github' className='form-control mt-2' onChange={(e) => setProjectDetails({ ...projectDetails, github: e.target.value })} />
