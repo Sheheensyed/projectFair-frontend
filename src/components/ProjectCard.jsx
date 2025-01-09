@@ -8,7 +8,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-function ProjectCard() {
+function ProjectCard(project) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -18,7 +18,7 @@ function ProjectCard() {
             <Card style={{ width: '100%' }} className='shadow border-0 mt-5 mt-md-0 mb-3'>
                 <Card.Img variant="top" src={projectImg} className='w-100' onClick={handleShow} />
                 <Card.Body>
-                    <Card.Title className='text-center'>Media player</Card.Title>
+                    <Card.Title className='text-center'>{project.Title}</Card.Title>
 
                 </Card.Body>
             </Card>
@@ -27,7 +27,7 @@ function ProjectCard() {
 
             <Modal show={show} onHide={handleClose} centered size='lg'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Media Player</Modal.Title>
+                    <Modal.Title>{project.Title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="container-fluid">
@@ -37,16 +37,16 @@ function ProjectCard() {
                             </div>
                             <div className="col-md-6">
                                 <h3 className='mt-3 mt-md-0'>Description</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe omnis est quos incidunt quo quaerat provident tenetur harum ipsam, illo, possimus iure dolorem, praesentium totam nesciunt repellat doloremque! Esse, animi?</p>
+                                <p>{project?.overview}</p>
                                 <h3>Technologies</h3>
-                                <p>React</p>
+                                <p>{project?.language}</p>
                             </div>
                         </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                <Link to={''} className='text-info'><FontAwesomeIcon icon={faGithub} className='fa-2x me-3' /></Link>
-               <Link to={''} className='text-success'> <FontAwesomeIcon icon={faGlobe}  className='fa-2x'/></Link>
+                <Link to={project?.github} target='_blank' className='text-info'><FontAwesomeIcon icon={faGithub} className='fa-2x me-3' /></Link>
+               <Link to={project?.website} target='_blank' className='text-success'> <FontAwesomeIcon icon={faGlobe}  className='fa-2x'/></Link>
                 </Modal.Footer>
             </Modal>
         </>

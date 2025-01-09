@@ -4,19 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ProjectCard from '../components/ProjectCard'
+import { HomeProjectApi } from '../service/allApi'
 // import photo from '../assets/desg.png'
 
 function Home() {
 
     const [isLogin, setIsLogin] = useState(false)
+    const [homeProject, setHomeProject] = useState([])
 
-    useEffect(()=>{
-        if(sessionStorage.getItem('token')){
+    const getHomeProject = async () => {
+        const result = await HomeProjectApi()
+        setHomeProject(result.data)
+    }
+
+    useEffect(() => {
+        getHomeProject()
+
+        if (sessionStorage.getItem('token')) {
             setIsLogin(true)
-        }else{
+        } else {
             setIsLogin(false)
         }
-    })
+    },)
 
     return (
         <>
@@ -50,10 +59,13 @@ function Home() {
             <div>
                 <h1 className='text-center mt-5'>Explore our Projects</h1>
                 <div className="container">
+
                     <div className="row mt-5">
-                        <div className="col-md-4"><ProjectCard /></div>
-                        <div className="col-md-4"><ProjectCard /></div>
-                        <div className="col-md-4"><ProjectCard /></div>
+                        {
+                            homeProject?.map((item) => (
+                                <div className="col-md-4"><ProjectCard project={item} /></div>
+                            ))
+                        }
                     </div>
                 </div>
                 <Link to={'/projects'} className='text-danger'><h5 className='text-danger text-center mt-5'>See more Projects <FontAwesomeIcon icon={faArrowRight} /></h5></Link>
