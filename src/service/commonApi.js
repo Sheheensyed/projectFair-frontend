@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const commonApi=async(httprequest,url,reqBody,reqHeader)=>{
+export const commonApi=async(httpRequest,url,reqBody,reqHeader)=>{
     const reqConfig={
-        method:httprequest,
+        method:httpRequest,
         url,
         data:reqBody,
         headers: reqHeader? reqHeader:{'Content-Type':'application/json'}

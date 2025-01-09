@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
+import {  Flip, toast, ToastContainer } from 'react-toastify';
 import { addProjectApi } from '../service/allApi';
+import "react-toastify/dist/ReactToastify.css"
 
 function AddProject() {
     const [show, setShow] = useState(false);
@@ -24,7 +25,7 @@ function AddProject() {
     console.log(projectDetails);
 
     const handleFile = (e) => {
-        console.log(e.target.files[0]);
+        // console.log(e.target.files[0]);
         setProjectDetails({ ...projectDetails, projectImage: e.target.files[0] })
     }
 
@@ -61,6 +62,8 @@ function AddProject() {
     }
 
     const handleAdd = async () => {
+        
+        // alert(`button clicked`)
         const { title, language, github, website, overview, projectImage } = projectDetails
         if (!title || !language || !github || !website || !overview || !projectImage) {
             toast.info('fill the form completely')
@@ -85,7 +88,7 @@ function AddProject() {
                 console.log(result);
 
                 if (result.status == 200) {
-                    toast.success(`project added successfully`)
+                    toast.error(`project added successfully`)
                     setTimeout(() => {
                         handleClose()
                     }, 2000)
@@ -103,6 +106,7 @@ function AddProject() {
 
         }
     }
+
 
     useEffect(() => {
         if (sessionStorage.getItem('token')) {
@@ -148,6 +152,8 @@ function AddProject() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <ToastContainer position='top-center' autoClose={2000} transition={Flip} theme='dark'  />
+            
         </>
     )
 }
