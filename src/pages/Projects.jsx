@@ -22,11 +22,17 @@ function Projects() {
 
     }
   }
+
+  console.log(token);
+  console.log(allProject);
+  
+  
+
   useEffect(() => {
     getAllProject()
     if (sessionStorage.getItem("token"))
       setToken(sessionStorage.getItem('token'))
-  }, [])
+  },[token])
 
   return (
     <>
