@@ -13,7 +13,7 @@ export const loginApi=async(reqBody)=>{
 }
 
 //add project
-export const addProjectApi=async()=>{
+export const addProjectApi=async(reqBody,reqHeader)=>{
  return await commonApi('POST',`${serverUrl}/add-project`,reqBody,reqHeader)
 }
 
@@ -24,7 +24,7 @@ export const HomeProjectApi=async()=>{
 
 // get all projects
 export const AllProjectApi=async(reqHeader)=>{
-    return await commonApi('GET',`${serverUrl}/all-project`,reqHeader)
+    return await commonApi('GET',`${serverUrl}/all-project`,"",reqHeader)
 }
 // get user projects
 export const getUserProject=async(reqHeader)=>{

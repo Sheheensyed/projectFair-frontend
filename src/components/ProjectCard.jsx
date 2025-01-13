@@ -1,6 +1,5 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
-import projectImg from '../assets/projectimg.png'
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +8,7 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { serverUrl } from '../service/serviceUrl';
 
-function ProjectCard(project) {
+function ProjectCard({project}) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -17,9 +16,9 @@ function ProjectCard(project) {
     return (
         <>
             <Card style={{ width: '100%' }} className='shadow border-0 mt-5 mt-md-0 mb-3'>
-                <Card.Img variant="top" src={`${serverUrl}/upload/${project.projectImage}`} className='w-100' onClick={handleShow} />
+                <Card.Img variant="top" src={`${serverUrl}/upload/${project?.projectImage}`} className='w-100' onClick={handleShow} />
                 <Card.Body>
-                    <Card.Title className='text-center'>{project.Title}</Card.Title>
+                    <Card.Title className='text-center'>{project?.Title}</Card.Title>
 
                 </Card.Body>
             </Card>
@@ -28,13 +27,13 @@ function ProjectCard(project) {
 
             <Modal show={show} onHide={handleClose} centered size='lg'>
                 <Modal.Header closeButton>
-                    <Modal.Title>{project.Title}</Modal.Title>
+                    <Modal.Title>{project?.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-6">
-                                <img style={{height:"200px"}} src={`${serverUrl}/upload/${project.projectImage}`} className='w-100' alt="" />
+                                <img style={{height:"200px"}} src={`${serverUrl}/upload/${project?.projectImage}`} className='w-100' alt="" />
                             </div>
                             <div className="col-md-6">
                                 <h3 className='mt-3 mt-md-0'>Description</h3>

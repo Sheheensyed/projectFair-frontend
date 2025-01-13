@@ -128,7 +128,7 @@ function AddProject() {
                     <div className="container">
                         <div className="row d-flex align-items-center">
                             <div className="col-md-6">
-                                <label htmlFor="projectImage">
+                                <label >
                                     <input type="file" key={key} className='d-none' id="projectImage" onChange={(e) => handleFile(e)} />
                                     <img src={preview ? preview : "https://www.timeoutdubai.com/cloud/timeoutdubai/2021/09/11/hfpqyV7B-IMG-Dubai-UAE.jpg"} className='w-100' alt="No image" />
                                 </label>
