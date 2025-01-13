@@ -10,8 +10,8 @@ function MyProject() {
         <>
             <div className='p-5 shadow'>
                 <div className='d-flex justify-content-between align-items-center'>
-                    <h1 className='text-success me-5'>My project</h1>
-                    <AddProject />
+                    <h1 className='text-success'>My project</h1>
+                    <div><AddProject /></div>
                 </div>
 
                 <div className='bg-light mt-3 p-3 rounded d-flex justify-content-between align-items-center'>

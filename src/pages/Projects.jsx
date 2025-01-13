@@ -32,7 +32,7 @@ function Projects() {
     getAllProject()
     if (sessionStorage.getItem("token"))
       setToken(sessionStorage.getItem('token'))
-  },[])
+  },[token])
 
   return (
     <>
@@ -73,7 +73,7 @@ function Projects() {
               <div className="row">
                 {allProject?.map((item) => (
 
-                  <div className="col-md-3"><ProjectCard Project={item} /></div>
+                  <div className="col-md-3"><ProjectCard project={item} /></div>
                 ))
                 }
               </div>

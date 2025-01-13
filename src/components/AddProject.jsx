@@ -117,7 +117,7 @@ function AddProject() {
     const handleShow = () => setShow(true);
     return (
         <>
-            <button onClick={handleShow} className='btn btn-outline-success ms-5'> Add project</button>
+            <button onClick={handleShow} className='btn btn-outline-success'> Add project</button>
 
 
             <Modal show={show} onHide={handleClose} centered size='lg'>
