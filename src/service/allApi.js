@@ -28,8 +28,7 @@ export const AllProjectApi=async(searchKey,reqHeader)=>{
     return await commonApi('GET',`${serverUrl}/all-project?search=${searchKey}`,"",reqHeader)
 }
 // get user projects
-export const getUserProject=async(reqHeader)=>{
-    return await commonApi('GET',`${serverUrl}/user-project`)
+export const GetUserProject =async(reqHeader)=>{
+    return await commonApi('GET',`${serverUrl}/user-project`,"",reqHeader)
 }
 
-//

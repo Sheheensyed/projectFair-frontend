@@ -1,11 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AddProject from './AddProject'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Edit from './Edit'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { GetUserProject } from '../service/allApi'
+import { Link } from 'react-router-dom'
 
 function MyProject() {
+
+    const [userProject, setUserProject] = useState([])
+    const getUserProject = async () => {
+        if (sessionStorage.getItem('token')) {
+            const token = sessionStorage.getItem('token')
+            const reqHeader = {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+
+
+            const result = await GetUserProject(reqHeader)
+            console.log(result.data);
+            setUserProject(result.data)
+
+
+        }
+
+    }
+    console.log(userProject);
+
+    useEffect(() => {
+        getUserProject()
+    }, [])
+
+
+
     return (
         <>
             <div className='p-5 shadow'>
@@ -14,20 +43,25 @@ function MyProject() {
                     <div><AddProject /></div>
                 </div>
 
-                <div className='bg-light mt-3 p-3 rounded d-flex justify-content-between align-items-center'>
-                    <h3 className=''>Media player</h3>
+                {userProject?.length > 0 ?
+                    userProject?.map((item) => (
+                        <div className='bg-light mt-3 p-3 rounded d-flex justify-content-between align-items-center'>
+                            <h3 className=''>{item?.title}</h3>
 
-                    <div className='d-flex'>
-                        <Edit />
-                        
-                        <FontAwesomeIcon icon={faGithub} className='fa-xl me-4 text-warning' />
-                        <FontAwesomeIcon icon={faGlobe} className='fa-xl me-4 text-success' />
-                        <FontAwesomeIcon icon={faTrash} className='fa-xl me-4 text-danger' />
-                    </div>
+                            <div className='d-flex'>
+                                <Edit />
 
-                </div>
+                               <Link to={item?.github} target='_blank'> <FontAwesomeIcon icon={faGithub} className='fa-xl me-4 text-warning' /></Link>
+                                <Link to={item?.website} target='_blank'><FontAwesomeIcon icon={faGlobe} className='fa-xl me-4 text-success' /></Link>
+                                <FontAwesomeIcon icon={faTrash} className='fa-xl me-4 text-danger' />
+                            </div>
 
-                <h3 className='text-center text-warning mt-5'>No project added yet</h3>
+                        </div>
+                    ))
+
+                    :
+                    <h3 className='text-center text-warning mt-5'>No project added yet</h3>
+                }
             </div>
         </>
     )
