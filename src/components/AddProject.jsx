@@ -88,7 +88,7 @@ function AddProject() {
                 console.log(result);
 
                 if (result.status == 200) {
-                    toast.error(`project added successfully`)
+                    toast.success(`project added successfully`)
                     setTimeout(() => {
                         handleClose()
                     }, 2000)
@@ -117,7 +117,7 @@ function AddProject() {
     const handleShow = () => setShow(true);
     return (
         <>
-            <button onClick={handleShow} className='btn btn-outline-success'> Add project</button>
+            <button onClick={handleShow} className='btn btn-outline-success ms-5'> Add project</button>
 
 
             <Modal show={show} onHide={handleClose} centered size='lg'>
