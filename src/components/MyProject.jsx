@@ -4,15 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Edit from './Edit'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { GetUserProject } from '../service/allApi'
+import { GetUserProject, removeUserProjectApi } from '../service/allApi'
 import { Link } from 'react-router-dom'
 import { addResponseContext } from '../context/ContextShare'
+
+
 
 function MyProject() {
 
     const [userProject, setUserProject] = useState([])
+    const [removeStatus,setRemoveStatus]=useState([])
 
-    const {addResponse}=useContext(addResponseContext)
+    const { addResponse } = useContext(addResponseContext)
 
 
     const getUserProject = async () => {
@@ -34,10 +37,30 @@ function MyProject() {
     }
     console.log(userProject);
 
+    
+    
+    const handleDelete = async (id) => {
+        if (sessionStorage.getItem('token')) {
+            const token = sessionStorage.getItem('token')
+            const reqHeader = {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+            const result = await removeUserProjectApi(id, reqHeader)
+            console.log(result);
+            if (result.status == 200) {
+                setRemoveStatus(result)
+                alert('Project deleted successfully')
+            } else {
+                alert('Something went wrong')
+            }
+            
+        }
+   
+    }
     useEffect(() => {
         getUserProject()
-    }, [addResponse])
-
+    }, [addResponse,removeStatus])
 
 
     return (
@@ -56,9 +79,9 @@ function MyProject() {
                             <div className='d-flex'>
                                 <Edit />
 
-                               <Link to={item?.github} target='_blank'> <FontAwesomeIcon icon={faGithub} className='fa-xl me-4 text-warning' /></Link>
+                                <Link to={item?.github} target='_blank'> <FontAwesomeIcon icon={faGithub} className='fa-xl me-4 text-warning' /></Link>
                                 <Link to={item?.website} target='_blank'><FontAwesomeIcon icon={faGlobe} className='fa-xl me-4 text-success' /></Link>
-                                <FontAwesomeIcon icon={faTrash} className='fa-xl me-4 text-danger' />
+                                <FontAwesomeIcon icon={faTrash} className='fa-xl me-4 text-danger' onClick={() => handleDelete(item?._id)} />
                             </div>
 
                         </div>
@@ -71,5 +94,6 @@ function MyProject() {
         </>
     )
 }
+
 
 export default MyProject

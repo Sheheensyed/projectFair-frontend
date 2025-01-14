@@ -32,3 +32,7 @@ export const GetUserProject =async(reqHeader)=>{
     return await commonApi('GET',`${serverUrl}/user-project`,"",reqHeader)
 }
 
+// api to remove user projects
+export const removeUserProjectApi=async(id,reqHeader)=>{
+    return await commonApi('DELETE', `${serverUrl}/remove-userProject/${id}`,{},reqHeader)
+}

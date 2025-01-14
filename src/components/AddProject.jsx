@@ -119,7 +119,7 @@ function AddProject() {
         if (sessionStorage.getItem('token')) {
             setToken(sessionStorage.getItem('token'))
         }
-    }, [])
+    },[])
 
     const handleShow = () => setShow(true);
     return (

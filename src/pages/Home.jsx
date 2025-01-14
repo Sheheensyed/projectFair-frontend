@@ -24,8 +24,10 @@ function Home() {
             setIsLogin(true)
         } else {
             setIsLogin(false)
-        }
-    },)
+        };
+    },[])
+
+    
 
     return (
         <>
@@ -35,7 +37,7 @@ function Home() {
                     <div className="row p-4 d-flex justify-content-center align-items-center">
 
                         <div className="col-md-6 mt-5">
-                            <h1 className='text-light mt-5'>Project Fair</h1>
+                            <h1 className='text-light mt-5' data-aos="fade-up-right">Project Fair</h1>
                             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium, necessitar!</p>
 
                             {isLogin == false ? <Link to={'/login'}>
