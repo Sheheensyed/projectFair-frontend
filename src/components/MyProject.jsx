@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AddProject from './AddProject'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Edit from './Edit'
@@ -6,10 +6,15 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { GetUserProject } from '../service/allApi'
 import { Link } from 'react-router-dom'
+import { addResponseContext } from '../context/ContextShare'
 
 function MyProject() {
 
     const [userProject, setUserProject] = useState([])
+
+    const {addResponse}=useContext(addResponseContext)
+
+
     const getUserProject = async () => {
         if (sessionStorage.getItem('token')) {
             const token = sessionStorage.getItem('token')
@@ -31,7 +36,7 @@ function MyProject() {
 
     useEffect(() => {
         getUserProject()
-    }, [])
+    }, [addResponse])
 
 
 

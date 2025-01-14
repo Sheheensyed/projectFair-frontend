@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
-import {  Flip, toast, ToastContainer } from 'react-toastify';
+import { Flip, toast, ToastContainer } from 'react-toastify';
 import { addProjectApi } from '../service/allApi';
 import "react-toastify/dist/ReactToastify.css"
+import { addResponseContext } from '../context/ContextShare';
 
 function AddProject() {
     const [show, setShow] = useState(false);
+
+    //useContext - used to accessing context
+    const { setAddResponse } = useContext(addResponseContext)
+
+
     const [preview, setPreview] = useState("")
     const [token, setToken] = useState('')
     console.log(token);
@@ -62,7 +68,7 @@ function AddProject() {
     }
 
     const handleAdd = async () => {
-        
+
         // alert(`button clicked`)
         const { title, language, github, website, overview, projectImage } = projectDetails
         if (!title || !language || !github || !website || !overview || !projectImage) {
@@ -92,6 +98,7 @@ function AddProject() {
                     setTimeout(() => {
                         handleClose()
                     }, 2000)
+                    setAddResponse(result)
                 } else if (result.status == 406) {
                     toast.warning(result.response.data)
                     handleCancel()
@@ -120,7 +127,7 @@ function AddProject() {
             <button onClick={handleShow} className='btn btn-outline-success'> Add project</button>
 
 
-            <Modal show={show} onHide={handleClose} centered size='lg'>
+            <Modal show={show} onHide={handleClose} centered size='lg' backdrop='static' >
                 <Modal.Header closeButton>
                     <Modal.Title className='text-success'>Add project details</Modal.Title>
                 </Modal.Header>
@@ -152,8 +159,8 @@ function AddProject() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <ToastContainer position='top-center' autoClose={2000} transition={Flip} theme='dark'  />
-            
+            <ToastContainer position='top-center' autoClose={2000} transition={Flip} theme='dark' />
+
         </>
     )
 }
