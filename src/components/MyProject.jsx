@@ -77,7 +77,7 @@ function MyProject() {
                             <h3 className=''>{item?.title}</h3>
 
                             <div className='d-flex'>
-                                <Edit />
+                                <Edit project={item}/>
 
                                 <Link to={item?.github} target='_blank'> <FontAwesomeIcon icon={faGithub} className='fa-xl me-4 text-warning' /></Link>
                                 <Link to={item?.website} target='_blank'><FontAwesomeIcon icon={faGlobe} className='fa-xl me-4 text-success' /></Link>
