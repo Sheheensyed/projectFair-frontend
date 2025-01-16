@@ -38,7 +38,7 @@ function ProjectCard({project}) {
                             <div className="col-md-6">
                                 <h3 className='mt-3 mt-md-0'>Description</h3>
                                 <p>{project?.overview}</p>
-                                <h3>Technologies</h3>
+                                <h3 className="mt-5">Technologies</h3>
                                 <p>{project?.language}</p>
                             </div>
                         </div>
