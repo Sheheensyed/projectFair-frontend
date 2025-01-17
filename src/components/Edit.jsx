@@ -13,6 +13,7 @@ function Edit({ project }) {
     console.log(project);
 
     const [preview, setPreview] = useState("")
+    const [key,setKey]=useState(0)
 
     const [projectDetails, setProjectDetails] = useState({
         title: project.title,
@@ -38,6 +39,25 @@ function Edit({ project }) {
         }
     }, [projectDetails.projectImage])
 
+
+    const handleCancel = () => {
+        setProjectDetails({
+            title: project.title,
+            language: project.language,
+            github: project.github,
+            website: project.website,
+            overview: project.overview,
+            projectImage: ""
+
+        })
+        setPreview('')
+        if(key == 0){
+            setKey(1)
+        }else{
+            setKey(0)
+        }
+    }
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -56,8 +76,8 @@ function Edit({ project }) {
                         <div className="row d-flex align-items-center">
                             <div className="col-md-6">
                                 <label>
-                                    <input onChange={(e) => handleFile(e)} type="file" className='d-none' name="" id="projectImage" />
-                                    <img  src={preview? preview : `${serverUrl}/upload/${project.projectImage}`} className='w-100' alt="" />
+                                    <input key={0} onChange={(e) => handleFile(e)} type="file" className='d-none' name="" id="projectImage" />
+                                    <img src={preview ? preview : `${serverUrl}/upload/${project.projectImage}`} className='w-100' alt="" />
                                     {/* <img  src={`https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg`} className='w-100' alt="" /> */}
 
                                 </label>
@@ -73,7 +93,7 @@ function Edit({ project }) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="warning" onClick={handleClose} className='me-3'>
+                    <Button variant="warning" onClick={handleCancel} className='me-3'>
                         Cancel
                     </Button>
                     <Button variant="success" onClick={handleClose}>
