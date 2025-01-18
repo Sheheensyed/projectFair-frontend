@@ -6,6 +6,9 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { serverUrl } from '../service/serviceUrl';
+import { ToastContainer } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { updateUserProjectApi } from '../service/allApi';
 
 
 function Edit({ project }) {
@@ -13,7 +16,7 @@ function Edit({ project }) {
     console.log(project);
 
     const [preview, setPreview] = useState("")
-    const [key,setKey]=useState(0)
+    const [key, setKey] = useState(0)
 
     const [projectDetails, setProjectDetails] = useState({
         title: project.title,
@@ -51,11 +54,69 @@ function Edit({ project }) {
 
         })
         setPreview('')
-        if(key == 0){
+        if (key == 0) {
             setKey(1)
-        }else{
+        } else {
             setKey(0)
         }
+    }
+
+    const handleUpdate = async () => {
+        const { title, language, github, website, overview, projectImage } = projectDetails
+        if (!title || !language || !github || !website || !overview) {
+            toast.info(`Fill the form completely`)
+        } else {
+            // api
+            // reqBody
+            const reqBody = new FormData()
+            reqBody.append("title", title)
+            reqBody.append("language", language)
+            reqBody.append("github", github)
+            reqBody.append("website", website)
+            reqBody.append("overview", overview)
+            preview ? reqBody.append("projectImage", projectImage) : reqBody.append("projectImage", project.projectImage)
+
+            const token = sessionStorage.getItem("token")
+
+            if (preview) {
+                const reqHeader = {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
+                }
+
+                const result = await updateUserProjectApi(project._id, reqBody, reqHeader)
+                console.log(result);
+                if (result.status == 200) {
+                    toast.success('Project Updated successfully')
+                    setTimeout(() => {
+                        handleClose()
+                    }, [2000]);
+                } else {
+                    handleCancel()
+                    toast.error(`Something went wrong`)
+
+                }
+
+            } else {
+                const reqHeader = {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+                const result = await updateUserProjectApi(project._id, reqBody, reqHeader)
+                console.log(result);
+                if (result.status == 200) {
+                    toast.success('Project Updated successfully')
+                    setTimeout(() => {
+                        handleClose()
+                    }, [2000]);
+                } else {
+                    handleCancel()
+                    toast.error(`Something went wrong`)
+
+                }
+            }
+        }
+
     }
 
     const handleClose = () => setShow(false);
@@ -78,8 +139,6 @@ function Edit({ project }) {
                                 <label>
                                     <input key={0} onChange={(e) => handleFile(e)} type="file" className='d-none' name="" id="projectImage" />
                                     <img src={preview ? preview : `${serverUrl}/upload/${project.projectImage}`} className='w-100' alt="" />
-                                    {/* <img  src={`https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg`} className='w-100' alt="" /> */}
-
                                 </label>
                             </div>
                             <div className="col-md-6">
@@ -96,15 +155,13 @@ function Edit({ project }) {
                     <Button variant="warning" onClick={handleCancel} className='me-3'>
                         Cancel
                     </Button>
-                    <Button variant="success" onClick={handleClose}>
+                    <Button variant="success" onClick={handleUpdate}>
                         Save changes
                     </Button>
                 </Modal.Footer>
             </Modal>
 
-
-
-
+            <ToastContainer position='top-center' />
         </>
     )
 }
