@@ -20,7 +20,7 @@ function App() {
         <Route path='/login' element={<Authentication />} />
         <Route path='/register' element={<Authentication register={true} />} />
         <Route path='/dashboard' element={loginResponse? <Dashboard/> : <PageNotFound/>} />
-        <Route path='*' element={<PageNotFound />} PNF={true} />
+        <Route path='*' element={<PageNotFound />}  />
       </Routes>
       <Footer />
     </>

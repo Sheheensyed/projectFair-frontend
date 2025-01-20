@@ -16,6 +16,7 @@ function Header() {
   const handleLogout = () => {
     sessionStorage.removeItem('existingUsers')
     sessionStorage.removeItem('token')
+    setLoginResponse(false)
     navigate('/')
   }
 
