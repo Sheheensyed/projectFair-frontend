@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
@@ -9,9 +9,11 @@ import { serverUrl } from '../service/serviceUrl';
 import { ToastContainer } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { updateUserProjectApi } from '../service/allApi';
+import { editProjectResponse } from '../context/ContextShare';
 
 
 function Edit({ project }) {
+    const { setEditResponse } = useContext(editProjectResponse)
     const [show, setShow] = useState(false);
     console.log(project);
 
@@ -87,6 +89,7 @@ function Edit({ project }) {
                 const result = await updateUserProjectApi(project._id, reqBody, reqHeader)
                 console.log(result);
                 if (result.status == 200) {
+                    setEditResponse(result)
                     toast.success('Project Updated successfully')
                     setTimeout(() => {
                         handleClose()
@@ -105,6 +108,7 @@ function Edit({ project }) {
                 const result = await updateUserProjectApi(project._id, reqBody, reqHeader)
                 console.log(result);
                 if (result.status == 200) {
+                    setEditResponse(result)
                     toast.success('Project Updated successfully')
                     setTimeout(() => {
                         handleClose()

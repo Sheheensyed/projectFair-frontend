@@ -1,7 +1,6 @@
 import React, { createContext, useState } from 'react'
 
 export const addResponseContext = createContext({})
-
 export const editProjectResponse = createContext({})
 
 function ContextShare({ children }) {

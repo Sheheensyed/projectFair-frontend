@@ -6,7 +6,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { GetUserProject, removeUserProjectApi } from '../service/allApi'
 import { Link } from 'react-router-dom'
-import { addResponseContext } from '../context/ContextShare'
+import { addResponseContext, editProjectResponse } from '../context/ContextShare'
 
 
 
@@ -16,6 +16,7 @@ function MyProject() {
     const [removeStatus,setRemoveStatus]=useState([])
 
     const { addResponse } = useContext(addResponseContext)
+    const {editResponse} = useContext(editProjectResponse)
 
 
     const getUserProject = async () => {
@@ -60,7 +61,7 @@ function MyProject() {
     }
     useEffect(() => {
         getUserProject()
-    }, [addResponse,removeStatus])
+    }, [addResponse,removeStatus,editResponse])
 
 
     return (
