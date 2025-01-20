@@ -6,17 +6,21 @@ import Dashboard from './pages/Dashboard'
 import PageNotFound from './pages/PageNotFound'
 import Home from './pages/Home'
 import Footer from './components/Footer'
+import { useContext } from 'react'
+import { loginResponseContext } from './context/ContextShare'
 
 function App() {
+
+  const {loginResponse}=useContext(loginResponseContext)
   return (
     <>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/projects' element={<Projects />} />
+        <Route path='/projects' element={loginResponse?<Projects /> : <PageNotFound/>} />
         <Route path='/login' element={<Authentication />} />
         <Route path='/register' element={<Authentication register={true} />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='*' element={<PageNotFound />} />
+        <Route path='/dashboard' element={loginResponse? <Dashboard/> : <PageNotFound/>} />
+        <Route path='*' element={<PageNotFound />} PNF={true} />
       </Routes>
       <Footer />
     </>

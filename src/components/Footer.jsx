@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function Footer() {
+function Footer({PNF}) {
   return (
     <>
       <div className="container-fluid bg-success p-4">

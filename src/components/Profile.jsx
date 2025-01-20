@@ -1,13 +1,15 @@
-import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import { serverUrl } from '../service/serviceUrl'
 import { toast } from 'react-toastify'
-import { ToastContainer } from 'react-bootstrap'
+import { Collapse, ToastContainer } from 'react-bootstrap'
 import { updateUserProfileApi } from '../service/allApi'
+import "react-toastify/dist/ReactToastify.css";
+
 
 function Profile() {
-
+  const [open, setOpen] = useState(false);
   const [updateStatus, setUpdateStatus] = useState({})
   const [preview, setPreview] = useState('')
   const [existingImage, setExistingImage] = useState("")
@@ -33,14 +35,14 @@ function Profile() {
   console.log(preview);
 
   useEffect(() => {
-    if (sessionStorage.getItem('existingUsers')) {
+    if (sessionStorage.getItem("existingUsers")) {
       const user = JSON.parse(sessionStorage.getItem("existingUsers"))
       console.log(user);
       setUserDetails({ ...userDetails, username: user.username, email: user.email, password: user.password, github: user.github, linkedin: user.linkedin })
       setExistingImage(user.profile)
 
     }
-  }, [])
+  }, [updateStatus])
 
   const handleUpdate = async () => {
     const { username, email, password, profile, github, linkedin } = userDetails
@@ -91,31 +93,44 @@ function Profile() {
   }
   return (
     <>
-      <div className='p-4 shadow mt-4 mt-md-0'>
+      <div className='p-4 shadow mt-4 mt-md-0' onMouseEnter={()=>setOpen(true)} onMouseLeave={()=>setOpen(false)}>
         <div className='d-flex justify-content-between my-3'>
           <h1 className='text-success'>Profile</h1>
-          <button className='btn btn-outline-danger'><FontAwesomeIcon
-            icon={faAngleUp} /></button>
-        </div>
 
-        <div className='d-flex justify-content-center align-items-center flex-column'>
-          <label htmlFor="projectImage" className='d-flex justify-content-center align-items-center flex-column'>
-            <input onChange={(e) => handleFile(e)} type="file" className='d-none' name="" id="projectImage" />
-
-            {existingImage == "" ? <img src={preview ? preview : "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} style={{ width: "200px", height: "200px", borderRadius: "50%", marginBottom: '10px' }} alt="" />
+            <button  onClick={() => setOpen(!open)} className='btn btn-outline-danger'>
+              
+              {open? <FontAwesomeIcon
+              icon={faAngleUp} />
               :
-              <img src={preview ? preview : `${serverUrl}/upload/${existingImage}`} style={{ width: "200px", height: "200px", borderRadius: '50%', marginBottom: "10px" }} alt="" />}
-
-          </label>
-          <div className="w-100">
-            <input type="text" placeholder='Github' onChange={(e) => { setUserDetails({ ...userDetails, github: e.target.value }) }} value={userDetails?.github} className='form-control' name="" id="" />
-            <input type="text" placeholder='Linkedin' onChange={(e) => { setUserDetails({ ...userDetails, linkedin: e.target.value }) }} value={userDetails?.linkedin} className='form-control mt-3' name="" id="" />
-            <div className='d-flex justify-content-center'>
-              <button onClick={handleUpdate} className='btn btn-success mt-4 text-center w-75 rounded'>Update profile</button></div>
-          </div>
+              <FontAwesomeIcon
+              icon={faAngleDown} />}
+              
+            </button>
         </div>
+
+       <Collapse in={open}>
+         <div>
+            <div className='d-flex justify-content-center align-items-center flex-column'>
+              <label htmlFor='projectImage' className='d-flex justify-content-center align-items-center flex-column'>
+                <input onChange={(e) => handleFile(e)} type="file" className='d-none' name="" id="projectImage" />
+    
+                {existingImage == "" ?
+                 <img src={preview ? preview : "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} style={{ width: "200px", height: "200px", borderRadius: "50%", marginBottom: '10px' }} alt="" />
+                  :
+                  <img src={preview ? preview : `${serverUrl}/upload/${existingImage}`} style={{ width: "200px", height: "200px", borderRadius: '50%', marginBottom: "10px" }} alt="" />}
+    
+              </label>
+              <div className="w-100">
+                <input type="text" placeholder='Github' onChange={(e) => { setUserDetails({ ...userDetails, github: e.target.value }) }} value={userDetails?.github} className='form-control' name="" id="" />
+                <input type="text" placeholder='Linkedin' onChange={(e) => { setUserDetails({ ...userDetails, linkedin: e.target.value }) }} value={userDetails?.linkedin} className='form-control mt-3' name="" id="" />
+                <div className='d-flex justify-content-center'>
+                  <button onClick={handleUpdate} className='btn btn-success mt-4 text-center w-75 rounded'>Update profile</button></div>
+              </div>
+            </div>
+         </div>
+       </Collapse>
       </div>
-      <ToastContainer position='top-center' theme="dark" />
+      <ToastContainer s={true} position='top-center' theme="dark" />
     </>
   )
 }

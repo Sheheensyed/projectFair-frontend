@@ -1,13 +1,15 @@
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginApi, requestApi } from '../service/allApi'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { loginResponseContext } from '../context/ContextShare'
 
 function Authentication({ register }) {
 
+  const {setLoginResponse}=useContext(loginResponseContext)
   const navigate = useNavigate()
   const [userDetails, setuserDetails] = useState({
     username: "",
@@ -50,6 +52,7 @@ function Authentication({ register }) {
       console.log(result);
       if (result.status == 200) {
         toast.success('Login successfull')
+        setLoginResponse(true)
 
         sessionStorage.setItem('existingUsers',JSON.stringify(result.data.existingUsers))
         sessionStorage.setItem('token',result.data.token)
